@@ -2,10 +2,15 @@ from fastapi import APIRouter, Depends, Response, status, HTTPException
 
 from config import settings
 from .crud import UserCRUDModel
-from .schemas import UserCreateSchema, UserResponseSchema, UserLoginSchema
+from .schemas import UserCreateSchema, UserResponseSchema, UserLoginSchema, UserFullInfoResponseSchema
 from .utils import register_user, login_user, get_user_by_token
 
 router = APIRouter(prefix="/api/v1/user", tags=['User'])
+
+
+@router.get("/me/{pk}", response_model=UserFullInfoResponseSchema)
+async def get_me(pk: int):
+    return await UserCRUDModel.find_full_info_by(pk=pk)
 
 
 @router.get("/all")

@@ -1,5 +1,11 @@
 from pydantic import BaseModel, EmailStr
 
+from api.v1.post.schemas import PostBaseSchema
+
+
+class PostSchemaByUser(PostBaseSchema):
+    pk: int
+
 
 class UserBase(BaseModel):
     first_name: str | None = None
@@ -20,5 +26,9 @@ class UserCreateSchema(UserBase):
 class UserLoginSchema(BaseModel):
     email: EmailStr
     password: str
+
+
+class UserFullInfoResponseSchema(UserResponseSchema):
+    posts: list[PostSchemaByUser]
 
 

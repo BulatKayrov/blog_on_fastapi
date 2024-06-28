@@ -1,4 +1,4 @@
-from sqlalchemy import select
+from sqlalchemy import select, insert
 
 from .db_helper import get_session
 
@@ -24,7 +24,7 @@ class BaseCRUDModel:  # CRUD
     async def create(cls, **kwargs):
         async with get_session() as session:
             stmt = cls.model(**kwargs)
-            await session.execute(stmt)
+            session.add(stmt)
             await session.commit()
             return stmt
 
@@ -39,7 +39,7 @@ class BaseCRUDModel:  # CRUD
     @classmethod
     async def delete(cls, **kwargs):
         async with get_session() as session:
-            stmt = cls.model.delete().where(cls.model.c.id == kwargs['id'])
+            stmt = cls.model.delete().where(cls.model.pk == kwargs['pk'])
             await session.execute(stmt)
             await session.commit()
             return stmt
