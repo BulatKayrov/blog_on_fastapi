@@ -1,4 +1,6 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr, ConfigDict
+
+from api.v1.review.schemas import ReviewForPostSchema
 
 
 class PostBaseSchema(BaseModel):
@@ -18,3 +20,21 @@ class PostUpdateSchema(PostBaseSchema):
 class PostResponseSchema(PostBaseSchema):
     pk: int
     user_id: int
+
+
+class PostSchemaByUser(PostBaseSchema):
+    pk: int
+
+
+class UserPostSchema(BaseModel):
+    first_name: str | None = None
+    last_name: str | None = None
+    email: EmailStr
+    pk: int
+
+
+class PostFindByPKResponseSchema(PostBaseSchema):
+    pk: int
+    user: UserPostSchema | None
+    reviews: list[ReviewForPostSchema] | None
+    average_rating: float | int
