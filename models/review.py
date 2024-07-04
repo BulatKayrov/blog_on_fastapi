@@ -26,23 +26,4 @@ class Review(Base):
     post_id: Mapped[int] = mapped_column(ForeignKey('posts.pk'))
     post: Mapped['Post'] = relationship(back_populates='reviews')
 
-    # @property
-    # def average_rating(self):
-    #     reviews = self.post
-    #     print(reviews)
-        # return sum(review.rating for review in reviews) / len(reviews)
-
-    # @average_rating.expression
-    # def average_rating(cls):
-    #     return select([func.avg(Review.rating)]).where(Review.post_id == cls.post_id)
-
-    # @average_rating.expression
-    # def average_rating(cls):
-
-        # reviews = self.post.reviews
-        # return sum(review.rating for review in reviews) / len(reviews)
-
-    # @hybrid_property
-    # def average_rating(self):
-    #     reviews = self.post.reviews
-    #     return sum(review.rating for review in reviews) / len(reviews)
+    
