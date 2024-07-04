@@ -14,9 +14,9 @@ async def get_me(pk: int):
 
 
 @router.get("/all")
-async def get_all_users(user=Depends(get_user_by_token)):
+async def get_all_users(offset: int | None, limit: int | None, user=Depends(get_user_by_token)):
     if user.is_admin:
-        return await UserCRUDModel.find_all()
+        return await UserCRUDModel.find_all(offset=offset, limit=limit)
     raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
 
 

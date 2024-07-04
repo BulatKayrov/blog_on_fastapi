@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, status
 
 from api.v1.user.utils import get_user_by_token
-from .schemas import PostCreateSchema, PostUpdateSchema, PostResponseSchema, PostFindByPKResponseSchema
 from .crud import PostCRUDModel
+from .schemas import PostCreateSchema, PostResponseSchema, PostFindByPKResponseSchema
 
 router = APIRouter(prefix="/posts", tags=["Posts"])
 

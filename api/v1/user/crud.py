@@ -1,7 +1,7 @@
 from sqlalchemy import select
 from sqlalchemy.orm import selectinload
 
-from models import BaseCRUDModel, User, Post
+from models import BaseCRUDModel, User
 from models import get_session
 
 
@@ -18,7 +18,8 @@ class UserCRUDModel(BaseCRUDModel):
     @classmethod
     async def create_user(cls, email, password, first_name=None, last_name=None, is_admin=False):
         async with get_session() as session:
-            user = cls.model(email=email, password=password, first_name=first_name, last_name=last_name, is_admin=is_admin)
+            user = cls.model(email=email, password=password, first_name=first_name, last_name=last_name,
+                             is_admin=is_admin)
             session.add(user)
             await session.commit()
             await session.refresh(user)
@@ -31,5 +32,3 @@ class UserCRUDModel(BaseCRUDModel):
             print(stmt)
             res = await session.execute(stmt)
             return res.scalars().first()
-
-

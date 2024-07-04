@@ -24,7 +24,8 @@ class PostCRUDModel(BaseCRUDModel):
             result = post.scalars().one_or_none()
 
             if result.reviews:
-                result.average_rating = sum(review_rating.rating for review_rating in result.reviews)/len(result.reviews)
+                result.average_rating = sum(review_rating.rating for review_rating in result.reviews) / len(
+                    result.reviews)
             else:
                 result.average_rating = 0
 

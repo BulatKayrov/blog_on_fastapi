@@ -1,7 +1,7 @@
 from datetime import datetime
-from typing import Any
 
 from pydantic import BaseModel
+
 
 class ReviewBaseSchema(BaseModel):
     name: str

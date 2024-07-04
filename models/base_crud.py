@@ -7,7 +7,7 @@ class BaseCRUDModel:  # CRUD
     model = None
 
     @classmethod
-    async def find_all(cls, offset: int, limit: int, **kwargs):
+    async def find_all(cls, offset: int | None, limit: int | None, **kwargs):
         async with get_session() as session:
             stmt = select(cls.model).filter_by(**kwargs).offset(offset).limit(limit)
             res = await session.execute(stmt)
