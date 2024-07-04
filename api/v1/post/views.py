@@ -8,8 +8,13 @@ router = APIRouter(prefix="/posts", tags=["Posts"])
 
 
 @router.get(path="/all", response_model=list[PostResponseSchema])
-async def get_all_posts(offset: int | None = None, limit: int | None = None):
-    return await PostCRUDModel.find_all(offset=offset, limit=limit)
+async def get_all_posts(
+        offset: int | None = None,
+        limit: int | None = None,
+        search_by_title: str | None = None,
+        search_by_content: str | None = None):
+    return await PostCRUDModel.find_all(offset=offset, limit=limit, search_by_title=search_by_title,
+                                        search_by_content=search_by_content)
 
 
 @router.post(path="/create", response_model=PostResponseSchema)

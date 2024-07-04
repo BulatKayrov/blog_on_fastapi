@@ -30,3 +30,17 @@ class PostCRUDModel(BaseCRUDModel):
                 result.average_rating = 0
 
             return result
+
+    @classmethod
+    async def find_all(cls, offset: int | None, limit: int | None,
+                       search_by_title: str | None, search_by_content: str | None
+                       ):
+        async with get_session() as session:
+            stmt = select(cls.model)
+            if search_by_title:
+                stmt = stmt.where(cls.model.title.ilike(f'%{search_by_title}%'))
+            if search_by_content:
+                stmt = stmt.where(cls.model.content.ilike(f'%{search_by_content}%'))
+            stmt = stmt.offset(offset).limit(limit)
+            res = await session.execute(stmt)
+            return res.scalars().all()
